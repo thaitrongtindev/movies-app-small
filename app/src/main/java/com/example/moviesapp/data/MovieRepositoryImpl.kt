@@ -21,6 +21,10 @@ class MovieRepositoryImpl(
         val newListOfMovies = getMovieFromAPI()
 
         // get and save thiss here
+        movieLocalDataSource.clearAll()
+        movieLocalDataSource.saveMovieToDB(newListOfMovies)
+        movieCacheDataSource.saveMoviesToCache(newListOfMovies)
+        return newListOfMovies
     }
 
     suspend fun getMoviesFromRoom(): List<Movie> {
@@ -60,7 +64,19 @@ class MovieRepositoryImpl(
         return movieList
     }
 
-    private fun getMoviesFromCache(): List<Movie>? {
-
+    private suspend fun getMoviesFromCache(): List<Movie> {
+        lateinit var movieList: List<Movie>
+        try {
+            movieList = movieCacheDataSource.getMoviesFromCache()
+        } catch (e : Exception) {
+            e.printStackTrace()
+        }
+        if (movieList.size > 0) {
+            return movieList
+        } else {
+            movieList = getMoviesFromRoom()
+            movieCacheDataSource.saveMoviesToCache(movieList)
+        }
+        return movieList
     }
 }
