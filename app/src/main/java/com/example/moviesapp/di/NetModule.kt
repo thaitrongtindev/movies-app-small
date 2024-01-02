@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 
 @Module
-class MovieModule(private val baseUrl: String) {
+class NetModule(private val baseUrl: String) {
 
     @Singleton
     @Provides
