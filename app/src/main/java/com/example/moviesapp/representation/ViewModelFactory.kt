@@ -1,24 +1,16 @@
 package com.example.moviesapp.representation
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.ViewModelProvider
 import com.example.moviesapp.domain.useccase.GetMovieUseCase
 import com.example.moviesapp.domain.useccase.UpdateMovieUseCase
 
-class ViewModel(
+class ViewModelFactory(
     private val getMovieUseCase: GetMovieUseCase,
     private val updateMovieUseCase: UpdateMovieUseCase
-) : ViewModel(){
+) : ViewModelProvider.Factory {
 
-    fun getMoives()  = liveData {
-        val movieList =  getMovieUseCase.execute()
-        emit(movieList)
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return MyViewModel(getMovieUseCase, updateMovieUseCase) as T
     }
-
-    fun updateMovies() = liveData {
-        val movieList = updateMovieUseCase.execute()
-            emit(movieList)
-    }
-
-
 }
