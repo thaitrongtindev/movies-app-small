@@ -3,9 +3,12 @@ package com.example.moviesapp.di
 import com.example.moviesapp.data.api.TMDBService
 import com.example.moviesapp.data.datasource.MovieRemoteDataSource
 import com.example.moviesapp.data.datasourceImpl.MovieRemoteDataSourceImpl
+import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
+
+@Module
 class RemoteDataModule (private val apiKey : String){
 
     @Singleton
