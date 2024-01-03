@@ -12,12 +12,12 @@ class MovieRepositoryImpl(
     private val movieCacheDataSource: MovieCacheDataSource,
     private val movieLocalDataSource: MovieLocalDataSource
 ) : MovieRepository {
-    override suspend fun getMovies(): List<Movie>? {
+    override suspend fun getMovies(): List<Movie> {
         return getMoviesFromCache()
     }
 
 
-    override suspend fun updateMovies(): List<Movie>? {
+    override suspend fun updateMovies(): List<Movie> {
         val newListOfMovies = getMovieFromAPI()
 
         // get and save thiss here
@@ -40,12 +40,13 @@ class MovieRepositoryImpl(
         } else {
             // if list = 0 then get dataa from api and save to db
             movieList = getMovieFromAPI()
+            Log.e(" movieList = getMovieFromAPI()", movieList.toString() )
             movieLocalDataSource.saveMovieToDB(movieList)
         }
         return movieList
     }
 
-    suspend fun getMovieFromAPI(): List<Movie> {
+    private suspend fun getMovieFromAPI(): List<Movie> {
         lateinit var movieList: List<Movie>
         try {
             //get dataa from api
@@ -55,8 +56,10 @@ class MovieRepositoryImpl(
             // response represent from MovieList
             // in MovieList contain "movie : List<Movie>"
             val body = response.body()
+            Log.e("body", body.toString() )
             if (body != null) {
                 movieList = body.movies
+                Log.e("movieList_API", movieList.toString() )
             }
         } catch (e : Exception) {
             e.printStackTrace()
@@ -68,6 +71,7 @@ class MovieRepositoryImpl(
         lateinit var movieList: List<Movie>
         try {
             movieList = movieCacheDataSource.getMoviesFromCache()
+            Log.e("movieList_Cache", movieList.toString() )
         } catch (e : Exception) {
             e.printStackTrace()
         }
@@ -75,6 +79,7 @@ class MovieRepositoryImpl(
             return movieList
         } else {
             movieList = getMoviesFromRoom()
+            Log.e("movieList = getMoviesFromRoom()", movieList.toString() )
             movieCacheDataSource.saveMoviesToCache(movieList)
         }
         return movieList

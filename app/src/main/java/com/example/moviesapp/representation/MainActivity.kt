@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     public lateinit var movieViewModelFactory: ViewModelFactory
 
 
-    private lateinit var movieViewModel:ViewModel
+    private lateinit var movieViewModel:MyViewModel
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: MovieAdapter
@@ -33,12 +33,11 @@ class MainActivity : AppCompatActivity() {
 
         (application as Injector).createMovieSubComponent().inject(this)
 
-        movieViewModel = ViewModelProvider(this, movieViewModelFactory).get((ViewModel::class.java))
-
+        movieViewModel = ViewModelProvider(this, movieViewModelFactory).get((MyViewModel::class.java))
         initRecyclerView()
     }
 
-    private fun initRecyclerView() {
+     fun initRecyclerView() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = MovieAdapter()
         binding.recyclerView.adapter = adapter
@@ -47,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayPopularMovies() {
         binding.movieProgress.visibility = View.VISIBLE
-        val responeLiveData = movieViewModel.getMovies()
+        val responeLiveData = movieViewModel.getMoives()
         responeLiveData.observe(this, Observer {
             if (it != null) {
                 adapter.setList(it)
