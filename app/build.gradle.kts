@@ -71,7 +71,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 //
     implementation ("com.google.dagger:dagger:2.50")
-   annotationProcessor ("com.google.dagger:dagger-compiler:2.50")
+   kapt ("com.google.dagger:dagger-compiler:2.50")
 //
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
 //

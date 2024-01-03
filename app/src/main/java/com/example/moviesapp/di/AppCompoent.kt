@@ -14,7 +14,7 @@ import javax.inject.Singleton
         RemoteDataModule::class,
         RepositoryModule::class,
         UseCaseModule::class,
-        MovieModule::class]
+     ]
 )
 interface AppCompoent {
 
