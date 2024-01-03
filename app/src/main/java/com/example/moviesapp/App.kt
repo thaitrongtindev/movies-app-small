@@ -1,7 +1,13 @@
-package com.example.moviesapp.di
+package com.example.moviesapp
 
 import android.app.Application
-import com.example.moviesapp.BuildConfig
+import com.example.moviesapp.di.AppCompoent
+import com.example.moviesapp.di.AppModule
+import com.example.moviesapp.di.DaggerAppCompoent
+import com.example.moviesapp.di.Injector
+import com.example.moviesapp.di.MovieSubComponent
+import com.example.moviesapp.di.NetModule
+import com.example.moviesapp.di.RemoteDataModule
 
 class App : Application(), Injector {
     private lateinit var appComponent : AppCompoent
