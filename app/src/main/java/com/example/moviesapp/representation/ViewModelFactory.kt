@@ -13,4 +13,5 @@ class ViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MyViewModel(getMovieUseCase, updateMovieUseCase) as T
     }
+
 }
